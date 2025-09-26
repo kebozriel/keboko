@@ -1,54 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Belajar ZONK HTML</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kenangan — Memory Album: Carrot (One Piece)</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #fdf6f0;
-      margin: 0;
-      padding: 20px;
+    :root{
+      --bg:#fff8f2;
+      --card:#fff;
+      --accent:#ff8a33; /* carrot orange */
+      --muted:#7c6b63;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --glass: rgba(255,255,255,0.6);
+      --rose:#ffdede;
     }
-    h1 {
-      color: #ff6600;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg), #fff3ea 120%);
+      color:#3c2f2a;
+      -webkit-font-smoothing:antialiased;
+      padding:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    img {
-      width: 250px;
-      border-radius: 15px;
-      margin: 10px 0;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
+
+    /* Layout */
+    .album{
+      width:980px;
+      max-width:96vw;
+      border-radius:20px;
+      background:linear-gradient(180deg,var(--card), #fff8f4);
+      padding:28px;
+      box-shadow: var(--shadow);
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:22px;
+      align-items:start;
     }
-    img:hover {
-      transform: scale(1.05);
+
+    /* Left: profile / cover */
+    .cover{
+      padding:18px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(255,138,51,0.08), rgba(255,202,160,0.04));
+      border:1px solid rgba(255,138,51,0.06);
     }
-    a {
-      display: inline-block;
-      margin-top: 15px;
-      text-decoration: none;
-      background: #ff6600;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: background 0.3s;
+    .cover .portrait{
+      width:100%;
+      border-radius:12px;
+      padding:14px;
+      background:linear-gradient(180deg,#fff,#fff6f0);
+      box-shadow: 0 6px 18px rgba(255,138,51,0.08) inset;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      min-height:260px;
     }
-    a:hover {
-      background: #cc5200;
+    /* cute carrot-mink SVG badge */
+    .portrait svg{ width:70%; height:auto }
+
+    .meta{margin-top:12px}
+    h1{font-size:20px;margin:6px 0 0 0;color:var(--accent)}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .badges{display:flex;gap:8px;margin-top:12px}
+    .badge{font-size:12px;padding:6px 8px;border-radius:999px;background:linear-gradient(90deg,rgba(255,138,51,0.12),rgba(255,199,160,0.06));border:1px solid rgba(255,138,51,0.06)}
+
+    /* Right: memories grid */
+    .memories{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:18px;
     }
+    .memory{
+      background:var(--card);
+      border-radius:12px;
+      padding:14px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.05);
+      border:1px solid rgba(0,0,0,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .memory .photo{
+      height:150px;
+      border-radius:10px;
+      overflow:hidden;
+      background:linear-gradient(120deg,#ffe9da,#fff0f0);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;
+    }
+    .photo svg{width:70%;opacity:0.9}
+    .caption{font-weight:600}
+    .note{font-size:13px;color:var(--muted)}
+    .meta-row{display:flex;justify-content:space-between;align-items:center}
+
+    /* small decorative ribbon */
+    .ribbon{
+      position:absolute;left:14px;top:12px;background:var(--accent);color:#fff;padding:6px 10px;border-radius:8px;font-size:12px;box-shadow:0 6px 10px rgba(255,138,51,0.12)
+    }
+
+    /* responsive */
+    @media (max-width:860px){
+      .album{grid-template-columns:1fr;}
+      .memories{grid-template-columns:1fr}
+    }
+
+    /* small utilities */
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+    .btn{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(60,47,42,0.06);font-weight:600;font-size:13px}
+
+    footer{grid-column:1/-1;margin-top:12px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* playful page corners */
+    .polaroid{background:linear-gradient(180deg,#fff,#fffefc);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.03)}
+
+    /* little heart */
+    .heart{font-size:14px;color:var(--accent)}
   </style>
 </head>
 <body>
-  <h1>Halo ini istri saya ❤️</h1>
-  <p>My love</p>
+  <main class="album" role="main" aria-label="Album kenangan Carrot One Piece">
+    <aside class="cover">
+      <div class="portrait polaroid">
+        <div class="ribbon">Carrot — Mink</div>
+        <!-- simple bunny-rabbit SVG to evoke Carrot (original fan art NOT used) -->
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#fff" />
+              <stop offset="1" stop-color="#ffe9da" />
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="96" fill="#fff3e8" />
+          <g transform="translate(22,16)">
+            <ellipse cx="56" cy="80" rx="38" ry="36" fill="#fff" stroke="#ffd5c0" stroke-width="2" />
+            <!-- ears -->
+            <path d="M28 34 C18 8, 44 -6, 60 26" fill="#fff" stroke="#ffd5c0" stroke-width="2"/>
+            <path d="M84 34 C94 8, 68 -6, 52 26" fill="#fff" stroke="#ffd5c0" stroke-width="2"/>
+            <!-- face -->
+            <circle cx="56" cy="80" r="12" fill="#fff7f5"/>
+            <circle cx="48" cy="76" r="2.5" fill="#3c2f2a"/>
+            <circle cx="64" cy="76" r="2.5" fill="#3c2f2a"/>
+            <path d="M50 86 Q56 92, 62 86" stroke="#ff8a33" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- carrot icon -->
+            <g transform="translate(100,80) rotate(12)">
+              <path d="M0 0 L26 -12 L40 8 L12 22 Z" fill="#ff8a33"/>
+              <path d="M16 -6 L12 -16 L6 -8 Z" fill="#86c77f"/>
+            </g>
+          </g>
+        </svg>
+      </div>
 
-  <!-- Foto Carrot -->
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4nSKMbrhNfAnq--0pjp6TjAoiX6z1EPMoOw&s" alt="Carrot One Piece">
+      <div class="meta">
+        <h1>Kenangan: Carrot</h1>
+        <div class="subtitle">Album kecil berisi momen-momen hangat & lucu dari petualangan Mink</div>
+        <div class="badges">
+          <div class="badge">Straw Hat Friends</div>
+          <div class="badge">Sulong Vibes</div>
+        </div>
 
-  <!-- Link Video YouTube -->
-  <p>
-    <a href="https://youtu.be/88Y1QNzxv2w?si=TovMbhZGtJRgsGgj" target="_blank">Lihat Videonya 💕</a>
-  </p>
+        <div class="controls">
+          <button class="btn">Tambah Memori</button>
+          <button class="btn">Edit</button>
+          <button class="btn">Unduh PDF</button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="memories">
+      <article class="memory">
+        <div class="photo polaroid" aria-hidden="true">
+          <!-- stylized scene: dancing under the moon -->
+          <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="120" rx="8" fill="#fff3e8" />
+            <circle cx="160" cy="30" r="18" fill="#fff7f5" stroke="#ffd5c0" />
+            <path d="M10 100 Q60 20, 110 100 T210 100" fill="none" stroke="#ffd5c0" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="caption">Tarian bulan purnama</div>
+        <div class="note">Suatu malam di Zou — Carrot menari tanpa henti sampai semua tersenyum.</div>
+        <div class="meta-row"><span class="note">Zou · 15 Mei</span><span class="heart">♥</span></div>
+      </article>
+
+      <article class="memory">
+        <div class="photo polaroid">
+          <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="120" rx="8" fill="#fffaf0" />
+            <g transform="translate(20,12)">
+              <rect width="70" height="70" rx="10" fill="#fff" stroke="#ffd5c0"/>
+              <rect x="80" width="70" height="70" rx="10" fill="#fff" stroke="#ffd5c0"/>
+            </g>
+          </svg>
+        </div>
+        <div class="caption">Momen lucu bersama Chopper</div>
+        <div class="note">Chopper tersipu saat Carrot mencoba topi dokter — tingkahnya menggemaskan.</div>
+        <div class="meta-row"><span class="note">Thousand Sunny · 2 Juli</span><span class="heart">♥</span></div>
+      </article>
+
+      <article class="memory">
+        <div class="photo polaroid">
+          <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="120" rx="8" fill="#fff3e8" />
+            <text x="20" y="68" font-size="14" fill="#7c6b63">Foto kenangan</text>
+          </svg>
+        </div>
+        <div class="caption">Pertarungan berani</div>
+        <div class="note">Carrot menunjukkan keberanian — salah satu momen yang membuat kami bangga.</div>
+        <div class="meta-row"><span class="note">Whole Cake · 8 Nov</span><span class="heart">♥</span></div>
+      </article>
+
+      <article class="memory">
+        <div class="photo polaroid">
+          <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="120" rx="8" fill="#fffaf3" />
+            <g transform="translate(26,10)">
+              <rect width="148" height="100" rx="8" fill="#fff" stroke="#ffd5c0"/>
+              <text x="10" y="35" font-size="12" fill="#7c6b63">Kilas balik — teman setia</text>
+            </g>
+          </svg>
+        </div>
+        <div class="caption">Pelukan terakhir</div>
+        <div class="note">Momen sederhana namun hangat saat semua berkumpul setelah badai.</div>
+        <div class="meta-row"><span class="note">Sabaody · 23 Jan</span><span class="heart">♥</span></div>
+      </article>
+
+      <footer>Album buatan penggemar • Simpan, edit, dan bagikan kenanganmu ✨</footer>
+    </section>
+  </main>
 </body>
 </html>
